@@ -18,9 +18,21 @@ var should = require('should');
 var publishsettingFilePath = process.env.PUBLISHSETTINGS_FILE_PATH;
 
 suite('cli', function () {
+    suite('account import', function () {
+        setup(function (done) {
+            AccountClear(done);
+        });
+
+        teardown(function (done) {
+            AccountClear(done);
+        });
+
+        test('Credential Import - Basic', function (done) {
+            AccountImport(done);
+        });
+    });
     suite('site list', function () {
         setup(function (done) {
-
             // Make sure there is one (and only one) account imported
             exec("azure account list --json", function (err, result) {
                 if (err) {
@@ -42,7 +54,7 @@ suite('cli', function () {
         });
 
         // Precondition:  There is already one website running in the imported account
-        test('basic', function (done) {
+        test('Basic', function (done) {
             exec("azure site list --json", function (err, result) {
                 if (err) {
                     throw err;
